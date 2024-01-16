@@ -38,6 +38,7 @@ public class Util {
             String zakaz = "";
             String count = "";
             String pozALL = "";
+            String pozALL_2 = "";    //  variant 2
             String pozAllWithCount = "";
             while ((line = br.readLine()) != null) {
                 if (line.equals("\t\t\t\t\t")
@@ -51,17 +52,25 @@ public class Util {
                 poz = mas[1].split("_")[0];
                 zakaz = mas[1].split("_")[1];
                 count = mas[2];
+
                 StringBuilder sb = new StringBuilder();
+                StringBuilder sb2 = new StringBuilder();
+
                 sb.append(inv);
-                if (Character.isDigit(poz.charAt(0))) {
-                    sb.append("p");
-                } else {
-                    sb.append("m");
-                }
+                sb.append("p");
                 sb.append(poz);
                 sb.append("L_");       // добавляется для лазера
                 sb.append(zakaz);
                 pozALL= sb.toString();
+
+                sb2 = new StringBuilder();
+                sb2.append(inv);
+                sb2.append("m");
+                sb2.append(poz);
+                sb2.append("L_");       // добавляется для лазера
+                sb2.append(zakaz);
+                pozALL_2= sb2.toString();
+
 
 
                 int dlinnaStr;
@@ -69,11 +78,15 @@ public class Util {
 
                     if (str.equals(pozALL)){
                         dlinnaStr = str.length();
-                        //sb.append(str).append(" ".repeat(samayaDlinnayaStroka - dlinnaStr + 10)).append(count);
-
                         pozAllWithCount = sb.toString();
                         pozAllWithCount = pozAllWithCount+" ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
 
+                        res.add(pozAllWithCount);
+                        break;
+                    } else if (str.equals(pozALL_2)) {
+                        dlinnaStr = str.length();
+                        pozAllWithCount = sb2.toString();
+                        pozAllWithCount = pozAllWithCount+" ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
                         res.add(pozAllWithCount);
                         break;
                     } else {
