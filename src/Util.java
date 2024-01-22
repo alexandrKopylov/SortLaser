@@ -39,6 +39,9 @@ public class Util {
             String count = "";
             String pozALL = "";
             String pozALL_2 = "";    //  variant 2
+            String pozALL_3 = "";    //  variant 3
+            String posWithoutFirstLetter;
+
             String pozAllWithCount = "";
             while ((line = br.readLine()) != null) {
                 if (line.equals("\t\t\t\t\t")
@@ -55,13 +58,14 @@ public class Util {
 
                 StringBuilder sb = new StringBuilder();
                 StringBuilder sb2 = new StringBuilder();
+                StringBuilder sb3 = new StringBuilder();
 
                 sb.append(inv);
                 sb.append("p");
                 sb.append(poz);
                 sb.append("L_");       // добавляется для лазера
                 sb.append(zakaz);
-                pozALL= sb.toString();
+                pozALL = sb.toString();
 
                 sb2 = new StringBuilder();
                 sb2.append(inv);
@@ -69,9 +73,21 @@ public class Util {
                 sb2.append(poz);
                 sb2.append("L_");       // добавляется для лазера
                 sb2.append(zakaz);
-                pozALL_2= sb2.toString();
+                pozALL_2 = sb2.toString();
+
+                sb3 = new StringBuilder();
+                sb3.append(inv);
+               // sb3.append("m");
 
 
+               // char firstLetter = poz.charAt(0);
+               // const str = "Jamaica".substring(1)
+                posWithoutFirstLetter = poz.substring(1);
+                sb3.append("m");
+                sb3.append(posWithoutFirstLetter);
+                sb3.append("L_");       // добавляется для лазера
+                sb3.append(zakaz);
+                pozALL_3 = sb3.toString();
 
                 int dlinnaStr;
                 for (String str : list) {
@@ -79,14 +95,20 @@ public class Util {
                     if (str.equals(pozALL)){
                         dlinnaStr = str.length();
                         pozAllWithCount = sb.toString();
-                        pozAllWithCount = pozAllWithCount+" ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
-
+                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
                         res.add(pozAllWithCount);
                         break;
                     } else if (str.equals(pozALL_2)) {
                         dlinnaStr = str.length();
                         pozAllWithCount = sb2.toString();
-                        pozAllWithCount = pozAllWithCount+" ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
+                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+                        res.add(pozAllWithCount);
+                        break;
+
+                    } else if (str.equals(pozALL_3)) {
+                        dlinnaStr = str.length();
+                        pozAllWithCount = sb3.toString();
+                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
                         res.add(pozAllWithCount);
                         break;
                     } else {
@@ -101,23 +123,31 @@ public class Util {
         return res;
     }
 
+    private String addSpaces(String count, int samayaDlinnayaStroka, int dlinnaStr) {
+String  pozAllWithCount ="";
+        if (count.equals("1")) {
+            pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
+        } else {
+            pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 12) + count;
+        }
+
+        return  pozAllWithCount;
+    }
+
 
     public void printInFile (File file, List<String> list){
-        FileWriter writer = null;
+
         try {
-            writer = new FileWriter(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            FileWriter writer = new FileWriter(file);
         for(String str: list) {
-            try {
-                writer.write(str + System.lineSeparator());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            writer.write(str + System.lineSeparator());
         }
-        try {
-            writer.close();
+
+        writer.write("-".repeat(20));
+        writer.write (System.lineSeparator());
+        writer.write("kolvo = "+(int) list.stream().count());
+        writer.write (System.lineSeparator());
+        writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
