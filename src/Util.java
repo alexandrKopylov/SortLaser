@@ -89,7 +89,7 @@ public class Util {
 
                 sb5 = new StringBuilder();
                 sb5.append(inv);
-                sb5.append("m");
+                sb5.append(".m");
                 sb5.append(poz);
                 sb5.append("L_");       // добавляется для лазера
                 sb5.append(zakaz);
