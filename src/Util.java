@@ -123,14 +123,14 @@ public class Util {
 
                     } else if (str.equals(pozALL_3)) {
                         dlinnaStr = str.length();
-                        pozAllWithCount = sb2.toString();
+                        pozAllWithCount = sb3.toString();
                         pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
                         res.add(pozAllWithCount);
                         break;
 
                     } else if (str.equals(pozALL_4)) {
                         dlinnaStr = str.length();
-                        pozAllWithCount = sb2.toString();
+                        pozAllWithCount = sb4.toString();
                         pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
                         res.add(pozAllWithCount);
                         break;
@@ -138,7 +138,7 @@ public class Util {
 
                     } else if (str.equals(pozALL_5)) {
                         dlinnaStr = str.length();
-                        pozAllWithCount = sb3.toString();
+                        pozAllWithCount = sb5.toString();
                         pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
                         res.add(pozAllWithCount);
                         break;
