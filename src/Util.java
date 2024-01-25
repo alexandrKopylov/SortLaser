@@ -40,6 +40,8 @@ public class Util {
             String pozALL = "";
             String pozALL_2 = "";    //  variant 2
             String pozALL_3 = "";    //  variant 3
+            String pozALL_4 = "";    //  variant 4
+            String pozALL_5 = "";    //  variant 5
             String posWithoutFirstLetter;
 
             String pozAllWithCount = "";
@@ -59,6 +61,8 @@ public class Util {
                 StringBuilder sb = new StringBuilder();
                 StringBuilder sb2 = new StringBuilder();
                 StringBuilder sb3 = new StringBuilder();
+                StringBuilder sb4 = new StringBuilder();
+                StringBuilder sb5 = new StringBuilder();
 
                 sb.append(inv);
                 sb.append("p");
@@ -66,6 +70,14 @@ public class Util {
                 sb.append("L_");       // добавляется для лазера
                 sb.append(zakaz);
                 pozALL = sb.toString();
+
+                sb4.append(inv);
+                sb4.append(".p");
+                sb4.append(poz);
+                sb4.append("L_");       // добавляется для лазера
+                sb4.append(zakaz);
+                pozALL_4 = sb4.toString();
+
 
                 sb2 = new StringBuilder();
                 sb2.append(inv);
@@ -75,13 +87,17 @@ public class Util {
                 sb2.append(zakaz);
                 pozALL_2 = sb2.toString();
 
+                sb5 = new StringBuilder();
+                sb5.append(inv);
+                sb5.append("m");
+                sb5.append(poz);
+                sb5.append("L_");       // добавляется для лазера
+                sb5.append(zakaz);
+                pozALL_5 = sb5.toString();
+
+
                 sb3 = new StringBuilder();
                 sb3.append(inv);
-               // sb3.append("m");
-
-
-               // char firstLetter = poz.charAt(0);
-               // const str = "Jamaica".substring(1)
                 posWithoutFirstLetter = poz.substring(1);
                 sb3.append("m");
                 sb3.append(posWithoutFirstLetter);
@@ -90,9 +106,9 @@ public class Util {
                 pozALL_3 = sb3.toString();
 
                 int dlinnaStr;
-                for (String str : list) {
 
-                    if (str.equals(pozALL)){
+                for (String str : list) {
+                    if (str.equals(pozALL)) {
                         dlinnaStr = str.length();
                         pozAllWithCount = sb.toString();
                         pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
@@ -106,6 +122,21 @@ public class Util {
                         break;
 
                     } else if (str.equals(pozALL_3)) {
+                        dlinnaStr = str.length();
+                        pozAllWithCount = sb2.toString();
+                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+                        res.add(pozAllWithCount);
+                        break;
+
+                    } else if (str.equals(pozALL_4)) {
+                        dlinnaStr = str.length();
+                        pozAllWithCount = sb2.toString();
+                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+                        res.add(pozAllWithCount);
+                        break;
+
+
+                    } else if (str.equals(pozALL_5)) {
                         dlinnaStr = str.length();
                         pozAllWithCount = sb3.toString();
                         pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
@@ -124,30 +155,30 @@ public class Util {
     }
 
     private String addSpaces(String count, int samayaDlinnayaStroka, int dlinnaStr) {
-String  pozAllWithCount ="";
+        String pozAllWithCount = "";
         if (count.equals("1")) {
             pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
         } else {
             pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 12) + count;
         }
 
-        return  pozAllWithCount;
+        return pozAllWithCount;
     }
 
 
-    public void printInFile (File file, List<String> list){
+    public void printInFile(File file, List<String> list) {
 
         try {
             FileWriter writer = new FileWriter(file);
-        for(String str: list) {
-            writer.write(str + System.lineSeparator());
-        }
+            for (String str : list) {
+                writer.write(str + System.lineSeparator());
+            }
 
-        writer.write("-".repeat(20));
-        writer.write (System.lineSeparator());
-        writer.write("kolvo = "+(int) list.stream().count());
-        writer.write (System.lineSeparator());
-        writer.close();
+            writer.write("-".repeat(20));
+            writer.write(System.lineSeparator());
+            writer.write("kolvo = " + (int) list.stream().count());
+            writer.write(System.lineSeparator());
+            writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
