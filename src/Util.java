@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,7 @@ public class Util {
                     continue;
                 }
                 mas = line.split("\t");
-                inv = mas[0];
+                inv = mas[0].replace(".", "");                 //удаляем точку в инвентарном
                 poz = mas[1].split("_")[0];
                 zakaz = mas[1].split("_")[1];
                 count = mas[2];
@@ -71,6 +72,7 @@ public class Util {
                 sb.append(zakaz);
                 pozALL = sb.toString();
 
+
                 sb4.append(inv);
                 sb4.append(".p");
                 sb4.append(poz);
@@ -79,7 +81,6 @@ public class Util {
                 pozALL_4 = sb4.toString();
 
 
-                sb2 = new StringBuilder();
                 sb2.append(inv);
                 sb2.append("m");
                 sb2.append(poz);
@@ -87,7 +88,7 @@ public class Util {
                 sb2.append(zakaz);
                 pozALL_2 = sb2.toString();
 
-                sb5 = new StringBuilder();
+
                 sb5.append(inv);
                 sb5.append(".m");
                 sb5.append(poz);
@@ -96,7 +97,6 @@ public class Util {
                 pozALL_5 = sb5.toString();
 
 
-                sb3 = new StringBuilder();
                 sb3.append(inv);
                 posWithoutFirstLetter = poz.substring(1);
                 sb3.append("m");
@@ -156,12 +156,7 @@ public class Util {
 
     private String addSpaces(String count, int samayaDlinnayaStroka, int dlinnaStr) {
         String pozAllWithCount = "";
-        if (count.equals("1")) {
             pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
-        } else {
-            pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 12) + count;
-        }
-
         return pozAllWithCount;
     }
 
@@ -184,5 +179,55 @@ public class Util {
         }
     }
 
+    public void readOrd(File file, List<String> listWhithCount) {
+        Iterator<String> iter = listWhithCount.iterator();
+        int k = 0;
+        List<String> changeList = new ArrayList<>();
 
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-16LE"));) {
+            String line;
+            String probel = "       ";
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                if (k == 0) {
+                    changeList.add(line + System.lineSeparator());
+                }
+                if (k != 0) {
+                    System.out.println(line);
+                    String str = iter.next();
+                    System.out.println(str);
+                    String [] masStrok = str.split("          ");   // 10 пробелов
+                    String []  masLineOrd = line.split("       ");    // 7 пробелов
+                    System.out.println ();
+                    sb.setLength(0);
+                   changeList.add(sb.append(masLineOrd[0]).append(probel).append(masLineOrd[1]).append(probel).append(masStrok[1]).append(probel).append(masStrok[1])
+                           .append(probel).append(masLineOrd[4]).append(probel).append(masLineOrd[5]).append(probel).append(masLineOrd[6]).append(probel)
+                           .append(masLineOrd[7]).append(probel).append(System.lineSeparator()).toString());
+                }
+
+                System.out.println("---------------------------------");
+                k++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
+        try {
+            PrintWriter writer = new PrintWriter (new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\1506_24_tmp.Ord"), "UTF-16LE" );
+           // writer.write("\uFEFF");
+            for (String str : changeList) {
+                writer.write(str );
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
 }
+
+

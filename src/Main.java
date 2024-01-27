@@ -7,9 +7,17 @@ import java.util.OptionalInt;
 
 public class Main {
 
-    static Path pathDXF = Path.of("c:\\Program Files\\AutoCAD 2010\\_DXF\\");
-    static File fileCSV = new File("c:\\Users\\alexx\\Desktop\\ДеталиБК_все.csv");
-    static File spisokGotogo = new File("c:\\Users\\alexx\\Desktop\\Gotogo.txt");
+   //  static Path pathDXF = Path.of("c:\\Program Files\\AutoCAD 2010\\_DXF\\");
+   static Path pathDXF = Path.of("C:\\Users\\user\\Desktop\\dxf\\dxf\\dxf");
+
+   //   static File fileCSV = new File("c:\\Users\\alexx\\Desktop\\ДеталиБК_все.csv");
+   static File fileCSV = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\ДеталиБК_все.csv");
+
+    static  File fileOrd = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\1506_24.Ord");
+
+   // static File spisokGotogo = new File("c:\\Users\\alexx\\Desktop\\Gotogo.txt");
+   static File spisokGotogo = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\Gotogo.txt");
+
 
     public static void main(String[] args) {
         Util util = new Util();
@@ -34,6 +42,8 @@ public class Main {
 //        }
 
         util.printInFile(spisokGotogo, listWithCol );
+
+        util.readOrd(fileOrd, listWithCol);
 
 
 
