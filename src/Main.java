@@ -1,9 +1,7 @@
 import java.io.File;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.OptionalInt;
+import java.time.Year;
+import java.util.*;
 
 public class Main {
 
@@ -13,13 +11,27 @@ public class Main {
    //   static File fileCSV = new File("c:\\Users\\alexx\\Desktop\\ДеталиБК_все.csv");
    static File fileCSV = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\ДеталиБК_все.csv");
 
-    static  File fileOrd = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\1506_24.Ord");
+    static  String fileOrdString = "C:\\Users\\user\\Desktop\\dxf\\dxf\\" ;     //1506_24.Ord");
 
    // static File spisokGotogo = new File("c:\\Users\\alexx\\Desktop\\Gotogo.txt");
    static File spisokGotogo = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\Gotogo.txt");
 
 
     public static void main(String[] args) {
+
+        Scanner scan  = new Scanner(System.in);
+        System.out.print("Введите комплектовочную: ");
+        String komplektovochnaya = scan.nextLine();
+
+        int currentYear = Year.now().getValue();
+        fileOrdString = fileOrdString + komplektovochnaya + "_" + currentYear + ".Ord";
+
+        File fileOrd = new File(fileOrdString);
+        if (!fileOrd.exists()){
+            System.out.println("нет такой комплектовочной " + fileOrdString);
+            return;
+        }
+
         Util util = new Util();
         List<String> list = util.searchDXF(pathDXF);
         for (String s : list) {
@@ -34,19 +46,15 @@ public class Main {
         int max = oi.getAsInt();
        // System.out.println(max);
 
-        List<String> listWithCol =  util.readCSV(fileCSV,list, max);
-        Collections.sort(listWithCol);
+        List<String> listWithCount =  util.readCSV(fileCSV,list, max);
+        Collections.sort(listWithCount);
 
-//        for (String s:listWithCol) {
+//        for (String s:listWithCount) {
 //            System.out.println(s);
 //        }
 
-        util.printInFile(spisokGotogo, listWithCol );
+        util.printInFile(spisokGotogo, listWithCount );
 
-        util.readOrd(fileOrd, listWithCol);
-
-
-
-
+        util.readOrd(fileOrd, listWithCount);
 
     }}

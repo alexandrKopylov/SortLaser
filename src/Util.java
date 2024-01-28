@@ -208,15 +208,15 @@ public class Util {
                 System.out.println("---------------------------------");
                 k++;
             }
+            file.delete();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
 
-
-
         try {
-            PrintWriter writer = new PrintWriter (new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\1506_24_tmp.Ord"), "UTF-16LE" );
+            PrintWriter writer = new PrintWriter (file , "UTF-16LE" );
            // writer.write("\uFEFF");
             for (String str : changeList) {
                 writer.write(str );
