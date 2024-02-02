@@ -4,6 +4,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Util {
@@ -46,6 +48,7 @@ public class Util {
             String posWithoutFirstLetter;
 
             String pozAllWithCount = "";
+
             while ((line = br.readLine()) != null) {
                 if (line.equals("\t\t\t\t\t")
                         || line.equals("\t\t\t\t")
@@ -59,93 +62,113 @@ public class Util {
                 zakaz = mas[1].split("_")[1];
                 count = mas[2];
 
-                StringBuilder sb = new StringBuilder();
-                StringBuilder sb2 = new StringBuilder();
-                StringBuilder sb3 = new StringBuilder();
-                StringBuilder sb4 = new StringBuilder();
-                StringBuilder sb5 = new StringBuilder();
+//                StringBuilder sb = new StringBuilder();
+//                StringBuilder sb2 = new StringBuilder();
+//                StringBuilder sb3 = new StringBuilder();
+//                StringBuilder sb4 = new StringBuilder();
+//                StringBuilder sb5 = new StringBuilder();
 
-                sb.append(inv);
-                sb.append("p");
-                sb.append(poz);
-                sb.append("L_");       // добавляется для лазера
-                sb.append(zakaz);
-                pozALL = sb.toString();
+//                sb.append(inv);
+//                sb.append("p");
+//                sb.append(poz);
+//                sb.append("L_");       // добавляется для лазера
+//                sb.append(zakaz);
+//                pozALL = sb.toString();
+//
+//
+//                sb4.append(inv);
+//                sb4.append(".p");
+//                sb4.append(poz);
+//                sb4.append("L_");       // добавляется для лазера
+//                sb4.append(zakaz);
+//                pozALL_4 = sb4.toString();
 
+                String finalInv = inv;
+                Predicate<String> invPredicate = x -> x.contains(finalInv) || x.contains(finalInv + "m" + finalInv);
 
-                sb4.append(inv);
-                sb4.append(".p");
-                sb4.append(poz);
-                sb4.append("L_");       // добавляется для лазера
-                sb4.append(zakaz);
-                pozALL_4 = sb4.toString();
-
-
-                sb2.append(inv);
-                sb2.append("m");
-                sb2.append(poz);
-                sb2.append("L_");       // добавляется для лазера
-                sb2.append(zakaz);
-                pozALL_2 = sb2.toString();
-
-
-                sb5.append(inv);
-                sb5.append(".m");
-                sb5.append(poz);
-                sb5.append("L_");       // добавляется для лазера
-                sb5.append(zakaz);
-                pozALL_5 = sb5.toString();
-
-
-                sb3.append(inv);
+                String search1 = "p" + poz + "L_" + zakaz;
+                String search2 = "m" + poz + "L_" + zakaz;
                 posWithoutFirstLetter = poz.substring(1);
-                sb3.append("m");
-                sb3.append(posWithoutFirstLetter);
-                sb3.append("L_");       // добавляется для лазера
-                sb3.append(zakaz);
-                pozALL_3 = sb3.toString();
+                String search3 = "m" + posWithoutFirstLetter + "L_" + zakaz;
+                Predicate<String> pozPredicate = x -> x.contains(search1) || x.contains(search2) || x.contains(search3);
 
-                int dlinnaStr;
-
-                for (String str : list) {
-                    if (str.equals(pozALL)) {
-                        dlinnaStr = str.length();
-                        pozAllWithCount = sb.toString();
-                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
-                        res.add(pozAllWithCount);
-                        break;
-                    } else if (str.equals(pozALL_2)) {
-                        dlinnaStr = str.length();
-                        pozAllWithCount = sb2.toString();
-                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
-                        res.add(pozAllWithCount);
-                        break;
-
-                    } else if (str.equals(pozALL_3)) {
-                        dlinnaStr = str.length();
-                        pozAllWithCount = sb3.toString();
-                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
-                        res.add(pozAllWithCount);
-                        break;
-
-                    } else if (str.equals(pozALL_4)) {
-                        dlinnaStr = str.length();
-                        pozAllWithCount = sb4.toString();
-                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
-                        res.add(pozAllWithCount);
-                        break;
+//                sb2.append(inv);
+//                sb2.append("m");
+//                sb2.append(poz);
+//                sb2.append("L_");       // добавляется для лазера
+//                sb2.append(zakaz);
+//                pozALL_2 = sb2.toString();
+//
+//
+//                sb5.append(inv);
+//                sb5.append(".m");
+//                sb5.append(poz);
+//                sb5.append("L_");       // добавляется для лазера
+//                sb5.append(zakaz);
+//                pozALL_5 = sb5.toString();
 
 
-                    } else if (str.equals(pozALL_5)) {
-                        dlinnaStr = str.length();
-                        pozAllWithCount = sb5.toString();
-                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
-                        res.add(pozAllWithCount);
-                        break;
-                    } else {
-                        continue;
-                    }
+                //     sb3.append(inv);
+                // posWithoutFirstLetter = poz.substring(1);
+//                sb3.append("m");
+//                sb3.append(posWithoutFirstLetter);
+//                sb3.append("L_");       // добавляется для лазера
+//                sb3.append(zakaz);
+//                pozALL_3 = sb3.toString();
+
+//                int dlinnaStr;
+//
+//                for (String str : list) {
+//                    if (str.equals(pozALL)) {
+//                        dlinnaStr = str.length();
+//                        pozAllWithCount = sb.toString();
+//                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+//                        res.add(pozAllWithCount);
+//                        break;
+//                    } else if (str.equals(pozALL_2)) {
+//                        dlinnaStr = str.length();
+//                        pozAllWithCount = sb2.toString();
+//                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+//                        res.add(pozAllWithCount);
+//                        break;
+//
+//                    } else if (str.equals(pozALL_3)) {
+//                        dlinnaStr = str.length();
+//                        pozAllWithCount = sb3.toString();
+//                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+//                        res.add(pozAllWithCount);
+//                        break;
+//
+//                    } else if (str.equals(pozALL_4)) {
+//                        dlinnaStr = str.length();
+//                        pozAllWithCount = sb4.toString();
+//                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+//                        res.add(pozAllWithCount);
+//                        break;
+//
+//
+//                    } else if (str.equals(pozALL_5)) {
+//                        dlinnaStr = str.length();
+//                        pozAllWithCount = sb5.toString();
+//                        pozAllWithCount = pozAllWithCount + addSpaces(count, samayaDlinnayaStroka, dlinnaStr);
+//                        res.add(pozAllWithCount);
+//                        break;
+//                    } else {
+//                        continue;
+//                    }
+//                }
+
+              Optional<String> optString =  list.stream()
+                        .filter(invPredicate)
+                        .filter(pozPredicate)
+                      .findFirst();
+
+                if(optString.isPresent()){
+                   res.add ( optString.get() + "          " + count);
                 }
+
+
+
 
             }
         } catch (IOException ex) {
@@ -156,7 +179,7 @@ public class Util {
 
     private String addSpaces(String count, int samayaDlinnayaStroka, int dlinnaStr) {
         String pozAllWithCount = "";
-            pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
+        pozAllWithCount = pozAllWithCount + " ".repeat(samayaDlinnayaStroka - dlinnaStr + 10) + count;
         return pozAllWithCount;
     }
 
@@ -196,13 +219,13 @@ public class Util {
                     System.out.println(line);
                     String str = iter.next();
                     System.out.println(str);
-                    String [] masStrok = str.split("          ");   // 10 пробелов
-                    String []  masLineOrd = line.split("       ");    // 7 пробелов
-                    System.out.println ();
+                    String[] masStrok = str.split("          ");   // 10 пробелов
+                    String[] masLineOrd = line.split("       ");    // 7 пробелов
+                    System.out.println();
                     sb.setLength(0);
-                   changeList.add(sb.append(masLineOrd[0]).append(probel).append(masLineOrd[1]).append(probel).append(masStrok[1]).append(probel).append(masStrok[1])
-                           .append(probel).append(masLineOrd[4]).append(probel).append(masLineOrd[5]).append(probel).append(masLineOrd[6]).append(probel)
-                           .append(masLineOrd[7]).append(probel).append(System.lineSeparator()).toString());
+                    changeList.add(sb.append(masLineOrd[0]).append(probel).append(masLineOrd[1]).append(probel).append(masStrok[1]).append(probel).append(masStrok[1])
+                            .append(probel).append(masLineOrd[4]).append(probel).append(masLineOrd[5]).append(probel).append(masLineOrd[6]).append(probel)
+                            .append(masLineOrd[7]).append(probel).append(System.lineSeparator()).toString());
                 }
 
                 System.out.println("---------------------------------");
@@ -216,10 +239,10 @@ public class Util {
 
 
         try {
-            PrintWriter writer = new PrintWriter (file , "UTF-16LE" );
-           // writer.write("\uFEFF");
+            PrintWriter writer = new PrintWriter(file, "UTF-16LE");
+            // writer.write("\uFEFF");
             for (String str : changeList) {
-                writer.write(str );
+                writer.write(str);
             }
             writer.close();
         } catch (IOException e) {
