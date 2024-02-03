@@ -5,16 +5,16 @@ import java.util.*;
 
 public class Main {
 
-   //  static Path pathDXF = Path.of("c:\\Program Files\\AutoCAD 2010\\_DXF\\");
-   static Path pathDXF = Path.of("C:\\Users\\user\\Desktop\\dxf\\dxf\\dxf");
+     static Path pathDXF = Path.of("c:\\Program Files\\AutoCAD 2010\\_DXF\\");
+  // static Path pathDXF = Path.of("C:\\Users\\user\\Desktop\\dxf\\dxf\\dxf");
 
-   //   static File fileCSV = new File("c:\\Users\\alexx\\Desktop\\ДеталиБК_все.csv");
-   static File fileCSV = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\ДеталиБК_все.csv");
+      static File fileCSV = new File("c:\\Users\\alexx\\Desktop\\ДеталиБК_все.csv");
+  // static File fileCSV = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\ДеталиБК_все.csv");
 
-    static  String fileOrdString = "C:\\Users\\user\\Desktop\\dxf\\dxf\\" ;     //1506_24.Ord");
+  //  static  String fileOrdString = "z:\\BAZA\\Autonest\\" ;     //1506_24.Ord");
 
-   // static File spisokGotogo = new File("c:\\Users\\alexx\\Desktop\\Gotogo.txt");
-   static File spisokGotogo = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\Gotogo.txt");
+    static File spisokGotogo = new File("c:\\Users\\alexx\\Desktop\\Gotogo.txt");
+   //static File spisokGotogo = new File("C:\\Users\\user\\Desktop\\dxf\\dxf\\Gotogo.txt");
 
 
     public static void main(String[] args) {
@@ -23,8 +23,12 @@ public class Main {
         System.out.print("Введите комплектовочную: ");
         String komplektovochnaya = scan.nextLine();
 
-        int currentYear = Year.now().getValue();
-        fileOrdString = fileOrdString + komplektovochnaya + "_" + currentYear + ".Ord";
+        int currentYear = Year.now().getValue()%100;
+      //  fileOrdString = fileOrdString + komplektovochnaya + "_" + currentYear + "\\"  +  komplektovochnaya + "_" + currentYear + ".Ord";
+         StringBuilder sb = new StringBuilder("z:\\BAZA\\Autonest\\");
+        String fileOrdString = sb.append(komplektovochnaya).append("_").append(currentYear).append("\\").append(komplektovochnaya).append("_")
+                .append(currentYear).append(".Ord").toString();
+
 
         File fileOrd = new File(fileOrdString);
         if (!fileOrd.exists()){
@@ -39,22 +43,12 @@ public class Main {
         }
         System.out.println("kol =" + list.size());
 
-        // находим самую длинную строку в списке
-        OptionalInt oi = list.stream()
-                .mapToInt(String::length)
-                .max();
-        int max = oi.getAsInt();
-       // System.out.println(max);
 
-        List<String> listWithCount =  util.readCSV(fileCSV,list, max);
-        Collections.sort(listWithCount);
-
-//        for (String s:listWithCount) {
-//            System.out.println(s);
-//        }
+        List<String> listWithCount =  util.readCSV(fileCSV, list);
+                Collections.sort(listWithCount);
 
         util.printInFile(spisokGotogo, listWithCount );
 
-        util.readOrd(fileOrd, listWithCount);
+        util.changeFileOrd(fileOrd, listWithCount);
 
     }}

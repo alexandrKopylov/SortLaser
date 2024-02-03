@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SortLaser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SortLaser_jar</output-path>
+    <root id="archive" name="SortLaser.jar">
+      <element id="module-output" name="SortLaser" />
+    </root>
+  </artifact>
+</component>
