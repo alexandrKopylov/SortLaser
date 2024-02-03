@@ -83,14 +83,6 @@ public class Util {
 //                sb4.append(zakaz);
 //                pozALL_4 = sb4.toString();
 
-                String finalInv = inv;
-                Predicate<String> invPredicate = x -> x.contains(finalInv) || x.contains(finalInv + "m" + finalInv);
-
-                String search1 = "p" + poz + "L_" + zakaz;
-                String search2 = "m" + poz + "L_" + zakaz;
-                posWithoutFirstLetter = poz.substring(1);
-                String search3 = "m" + posWithoutFirstLetter + "L_" + zakaz;
-                Predicate<String> pozPredicate = x -> x.contains(search1) || x.contains(search2) || x.contains(search3);
 
 //                sb2.append(inv);
 //                sb2.append("m");
@@ -158,7 +150,18 @@ public class Util {
 //                    }
 //                }
 
-              Optional<String> optString =  list.stream()
+                String finalInv = inv;
+                Predicate<String> invPredicate = x -> x.contains(finalInv) || x.contains(finalInv + "m" + finalInv);
+
+                String search1 = "p" + poz + "L_" + zakaz;
+                String search2 = "m" + poz + "L_" + zakaz;
+                posWithoutFirstLetter = poz.substring(1);
+                String search3 = "m" + posWithoutFirstLetter + "L_" + zakaz;
+                String search4 = poz + "L_" + zakaz;
+                Predicate<String> pozPredicate = x -> x.contains(search1) || x.contains(search2) || x.contains(search3) || x.contains(search4);
+
+
+                Optional<String> optString =  list.stream()
                         .filter(invPredicate)
                         .filter(pozPredicate)
                       .findFirst();
