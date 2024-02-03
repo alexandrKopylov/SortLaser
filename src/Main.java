@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Main {
 
+
      static Path pathDXF = Path.of("c:\\Program Files\\AutoCAD 2010\\_DXF\\");
   // static Path pathDXF = Path.of("C:\\Users\\user\\Desktop\\dxf\\dxf\\dxf");
 
