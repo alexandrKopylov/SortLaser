@@ -3,7 +3,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -105,7 +104,6 @@ public class Util {
     }
 
     public void changeFileOrd(File file, List<String> listWhithCount) {
-        Iterator<String> iter = listWhithCount.iterator();
         int k = 0;
         List<String> changeList = new ArrayList<>();
 
@@ -113,32 +111,40 @@ public class Util {
             String line;
             String probel = "       ";
             StringBuilder sb = new StringBuilder();
+            String[] masLineOrd;
+            String[] masStrok;
+
             while ((line = reader.readLine()) != null) {
                 if (k == 0) {
                     changeList.add(line + System.lineSeparator());
                 }
                 if (k != 0) {
-                    System.out.println(line);
-                    String str = iter.next();
-                    System.out.println(str);
-                    String[] masStrok = str.split(" {10}");   // 10 пробелов
-                    String[] masLineOrd = line.split(" {7}");    // 7 пробелов
-                    System.out.println();
-                    sb.setLength(0);
-                    changeList.add(sb.append(masLineOrd[0]).append(probel).append(masLineOrd[1]).append(probel).append(masStrok[1]).append(probel).append(masStrok[1])
-                            .append(probel).append(masLineOrd[4]).append(probel).append(masLineOrd[5]).append(probel).append(masLineOrd[6]).append(probel)
-                            .append(masLineOrd[7]).append(probel).append(System.lineSeparator()).toString());
-                }
+                    masLineOrd = line.split(" {7}");    // 7 пробелов
+                    for (String str : listWhithCount) {
+                        masStrok = str.split(" {10}");   // 10 пробелов
 
-                System.out.println("---------------------------------");
-                k++;
+                        String s1 = masLineOrd[1];
+                        String  s2 = masStrok[0];
+                        boolean bool = s1.contains(s2);
+
+                        if (masLineOrd[1].contains(masStrok[0])) {
+                            sb.setLength(0);
+                            String stroka = sb.append(masLineOrd[0]).append(probel).append(masLineOrd[1]).append(probel).append(masStrok[1]).append(probel).append(masStrok[1])
+                                    .append(probel).append(masLineOrd[4]).append(probel).append(masLineOrd[5]).append(probel).append(masLineOrd[6]).append(probel)
+                                    .append(masLineOrd[7]).append(probel).append(System.lineSeparator()).toString();
+                            changeList.add(stroka);
+                            listWhithCount.remove(str);
+                            break;
+                        }
+                    }
+                }
+                k=1;
             }
             file.delete();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
         try {
             PrintWriter writer = new PrintWriter(file, StandardCharsets.UTF_16LE);
