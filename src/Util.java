@@ -156,9 +156,51 @@ public class Util {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
+
+
+
+    public void deleteDublicati(File file, List<Path> listFilesInDXF) {
+        int k = 0;
+       // List<String> changeList = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_16LE));) {
+            String line;
+            String probel = "       ";
+            StringBuilder sb = new StringBuilder();
+            String[] masLineOrd;
+            String[] masStrok;
+
+            while ((line = reader.readLine()) != null) {
+                if (k == 0) {
+                   // changeList.add(line + System.lineSeparator());
+                    continue;
+                }
+                if (k != 0) {
+                    masLineOrd = line.split(" {7}");    // 7 пробелов
+
+                    for (Path path : listFilesInDXF) {
+                        masStrok = path.getFileName().toString().replace(".dxf", "").split(" {10}");   // 10 пробелов
+
+                        String s1 = masLineOrd[1];
+                        String  s2 = masStrok[0];
+                        boolean bool = s1.contains(s2);
+
+                        if (masLineOrd[1].contains(masStrok[0])) {
+                           path.toFile().delete();
+                            listFilesInDXF.remove(path);
+                            break;
+                        }
+                    }
+                }
+                k=1;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
 
 

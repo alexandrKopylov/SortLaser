@@ -1,7 +1,10 @@
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Year;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -37,19 +40,51 @@ public class Main {
             return;
         }
 
-        Util util = new Util();
-        List<String> list = util.searchDXF(pathDXF);
-        for (String s : list) {
-            System.out.println(s);
+        System.out.println("1-добавляем количество деталей в файл ord");
+        System.out.println("2-удаляем дубликать");
+        System.out.println("3-exit");
+        int chose = scan.nextInt();
+
+        if (chose==3){
+            System.exit(1);
         }
-        System.out.println("kol =" + list.size());
+
+        if (chose==1){
+            Util util = new Util();
+            List<String> list = util.searchDXF(pathDXF);
+            for (String s : list) {
+                System.out.println(s);
+            }
+            System.out.println("kol =" + list.size());
 
 
-        List<String> listWithCount =  util.readCSV(fileCSV, list);
-                Collections.sort(listWithCount);
+            List<String> listWithCount =  util.readCSV(fileCSV, list);
+            Collections.sort(listWithCount);
 
-        util.printInFile(spisokGotogo, listWithCount );
+            util.printInFile(spisokGotogo, listWithCount );
 
-        util.changeFileOrd(fileOrd, listWithCount);
+            util.changeFileOrd(fileOrd, listWithCount);
+        }
+
+        if (chose==2){
+
+            Util util = new Util();
+            List<Path> listPathDXF;
+            try {
+                listPathDXF = Files.walk(pathDXF)
+                        .filter(Files::isRegularFile)
+                        .filter(x -> x.toFile().getName().endsWith(".dxf"))
+                        .collect(Collectors.toList());
+            } catch (
+                    IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            util.deleteDublicati(fileOrd,listPathDXF);
+
+
+        }
+
+
 
     }}
