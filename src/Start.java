@@ -3,10 +3,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Year;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Main {
+public class Start {
 
 
      static Path pathDXF = Path.of("c:\\Program Files\\AutoCAD 2010\\_DXF\\");
@@ -75,6 +77,7 @@ public class Main {
                         .filter(Files::isRegularFile)
                         .filter(x -> x.toFile().getName().endsWith(".dxf"))
                         .collect(Collectors.toList());
+
             } catch (
                     IOException e) {
                 throw new RuntimeException(e);

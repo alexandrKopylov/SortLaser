@@ -52,6 +52,11 @@ public class Util {
                 mas = line.split("\t");
                 inv = mas[0].replace(".", "");                 //удаляем точку в инвентарном
                 poz = mas[1].split("_")[0];
+
+
+                if (!mas[1].contains("_")){
+                    throw new RuntimeException("нужно печатать детали комппектовочной с заказом");
+                }
                 zakaz = mas[1].split("_")[1];
                 count = mas[2];
                 String poz_L_zakaz = poz + "L_" + zakaz;
@@ -172,11 +177,7 @@ public class Util {
             String[] masStrok;
 
             while ((line = reader.readLine()) != null) {
-                if (k == 0) {
-                   // changeList.add(line + System.lineSeparator());
-                    continue;
-                }
-                if (k != 0) {
+                 if (k != 0) {
                     masLineOrd = line.split(" {7}");    // 7 пробелов
 
                     for (Path path : listFilesInDXF) {
